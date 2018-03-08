@@ -4,12 +4,7 @@ var bodyParser = require('body-parser');
 var path = require('path');
 var expressValidator = require('express-validator');
 var session = require('express-session');
-var flash = require('connect-flash');
-var session = require('express-session');
-var config = require('./config/database');
-var passport = require('passport');
-var bcrypt = require('bcryptjs');
-let Administrator = require('./models/administrator');
+var config = require('./config/database')
   var request = require('request');
 const port = process.env.PORT || 3001;
 const formidable = require('formidable');
@@ -37,72 +32,54 @@ db.once('open', function () {
 db.on('error', function (err) {
   console.log(err);
 });
+var express = require('express');
+var path = require('path');
+var logger = require('morgan');
+var cookieParser = require('cookie-parser');
+var bodyParser = require('body-parser');
 
-/*
--------------------------------------------------------------------------
----------------------Declaration of the application----------------------
--------------------------------------------------------------------------
-*/
+var index = require('./routes/index');
 
 var app = express();
 
-app.listen(port, () => console.log(`Listening on port ${port}`));
+// view engine setup
+app.set('views', path.join(__dirname, 'views'));
+app.set('view engine', 'ejs');
 
-/*
--------------------------------------------------------------------------
------------------------------MIDDLEWARE----------------------------------
--------------------------------------------------------------------------
-*/
-
-//Body Parser middleware
+// uncomment after placing your favicon in /public
+//app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
+app.use(logger('dev'));
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({extended: false}));
-
-//Set static Path to public folder
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-//Express session middleware
-app.use(session({
-  secret: 'keyboard cat',
-  resave: true,
-  saveUninitialized: true
-}));
 
-//Express validator middleware
-app.use(expressValidator());
+app.use('/api', index);
 
-
-
-//Passport config
-require('./config/passport')(passport);
-//Passport middleware
-app.use(passport.initialize());
-app.use(passport.session());
-
-app.get('*',function(req,res,next){
-	res.locals.user = req.user || null;
-	next();
+// catch 404 and forward to error handler
+app.use(function(req, res, next) {
+  var err = new Error('Not Found');
+  err.status = 404;
+  next(err);
 });
 
-/*
--------------------------------------------------------------------------
----------------------------GLOBAL VARIABLES------------------------------
--------------------------------------------------------------------------
-*/
-app.use(function(req,res,next){
-	res.locals.errors = null;
-	next();
+// error handler
+app.use(function(err, req, res, next) {
+  // set locals, only providing error in development
+  res.locals.message = err.message;
+  res.locals.error = req.app.get('env') === 'development' ? err : {};
+
+  // render the error page
+  res.status(err.status || 500);
+  res.render('error');
 });
 
-/*
--------------------------------------------------------------------------
----------------------------API------------------------------
--------------------------------------------------------------------------
-*/
+if (process.env.NODE_ENV === 'production') {
+  app.use(express.static('client/build'));
+};
 
-app.get('/api/hello', (req, res) => {
-  res.send({ express: 'Hello From Express' });
-});
+
 
 app.get('/user/:name', (req,res) => {
 
@@ -129,7 +106,4 @@ app.get('/user/:name', (req,res) => {
   });
 });
 
-
-if (process.env.NODE_ENV === 'production') {
-  app.use(express.static('client/build'));
-};
+module.exports = app;
