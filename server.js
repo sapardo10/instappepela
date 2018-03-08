@@ -101,6 +101,7 @@ app.get('/user/:name', (req,res) => {
   //Step 3 - do the request
   request(options, (error, response, body) => {
       if (!error && response.statusCode == 200) {
+        console.log(body);
           res.send(body.object.user.media.nodes);
       }
   });

@@ -1,11 +1,13 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
 import './App.css';
-import NameForm from './register.js';
-import FileForm from './upload.js';
-import List from './show-files.js';
+import Fight from './Fight.js';
+import Results from './Results.js';
 
 class App extends Component {
+  constructor(props) {
+    super(props);
+    this.handleName = this.handleName.bind(this);
+  }
   state = {
     photos:[],
     cont1: 0,
@@ -17,13 +19,9 @@ class App extends Component {
   }
 
   componentDidMount() {
-    fetch('/users/')
-    .then(res => res.json())
-    .then(users => this.setState({users}));
   }
 
   handleName(name1, name2){
-    let me =this;
     var contado1 = 0;
     var contado2=0;
     var numFotos1=0;
@@ -31,29 +29,30 @@ class App extends Component {
 
     fetch('/user/'+name1)
     .then(res => res.json())
-    .then((object.user.media.nodes) => {nodes.map((n) =>
-    contado2+=n.likes.count;
-    numFotos1++;
-    ));
+    .then((photos) => {photos.map((photo)=>{
+        contado1+=photo.likes.count;
+        numFotos1++;
+      });
+    });
 
     fetch('/user/'+name2)
     .then(res => res.json())
-    .then((object.user.media.nodes) => {nodes.map((n) =>
-    contado1+=n.likes.count;
-    numFotos2++;
-  }));
+    .then((photos) => {photos.map((photo)=>{
+        contado2+=photo.likes.count;
+        numFotos2++;
+      });
+    });
 
     this.setState({
       name1:name1,
       name2:name2,
       cont1: contado1,
-      cont2: contado2
+      cont2: contado2,
+      numFotos1:numFotos1,
+      numFotos2:numFotos2
     });
   }
 
-  handleClick(user1,user2){
-
-  }
 
   render() {
     return (
@@ -64,7 +63,9 @@ class App extends Component {
         <Results name1 = {this.state.name1}
                 name2 = {this.state.name2}
                 cont1 = {this.state.cont1}
-                cont2 = {this.state.cont2}/>
+                cont2 = {this.state.cont2}
+                numFotos1 = {this.state.numFotos1}
+                numFotos2 = {this.state.numFotos2}/>
       </div>
     );
   }
