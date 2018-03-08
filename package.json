@@ -1,0 +1,47 @@
+{
+  "name": "ejemplo",
+  "version": "1.0.0",
+  "description": "Para encontrar los huecos en comun IYKWIM",
+  "author": {
+    "name": "sergio Pardo",
+    "email": "carnifis@gmail.com"
+  },
+  "license": "MIT",
+  "scripts": {
+    "client": "cd client && yarn start",
+    "server": "node server.js",
+    "start": "concurrently \"npm run server\" \"npm run client\"",
+    "dev": "concurrently --kill-others-on-fail \"yarn server\" \"yarn client\""
+  },
+  "dependencies": {
+    "axios": "^0.18.0",
+    "bcryptjs": "^2.4.3",
+    "body-parser": "^1.18.2",
+    "concurrently": "^3.5.0",
+    "connect-flash": "^0.1.1",
+    "express": "^4.16.2",
+    "express-session": "^1.15.6",
+    "express-validator": "^5.0.3",
+    "formidable": "^1.1.1",
+    "mongodb": "^3.0.4",
+    "mongoose": "^5.0.9",
+    "passport": "^0.4.0",
+    "passport-local": "^1.0.0",
+    "react": "^16.2.0",
+    "react-dom": "^16.2.0",
+    "react-scripts": "1.1.1",
+    "request": "^2.83.0"
+  },
+  "devDependencies": {
+    "concurrently": "^3.5.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/sapardo10/huecoExplorator"
+  },
+  "keywords": [
+    "node",
+    "express",
+    "create-react-app"
+  ]
+}
