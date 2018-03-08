@@ -10,12 +10,14 @@
   "scripts": {
     "client": "cd client && yarn start",
     "server": "node server.js",
-    "start": "concurrently \"npm run server\" \"npm run client\"",
+    "start": "node ./bin/www",
+    "start2": "concurrently \"npm run server\" \"npm run client\"",
     "dev": "concurrently --kill-others-on-fail \"yarn server\" \"yarn client\""
   },
   "dependencies": {
     "body-parser": "^1.18.2",
     "concurrently": "^3.5.0",
+    "ejs": "^2.5.7",
     "express": "^4.16.2",
     "express-validator": "^5.0.3",
     "mongodb": "^3.0.4",
