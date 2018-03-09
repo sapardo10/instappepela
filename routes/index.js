@@ -1,41 +1,45 @@
 var express = require('express');
+
 var request = require('request');
+
 // Retrieve
 var MongoClient = require('mongodb').MongoClient;
 var router = express.Router();
 var secret = 'mysecret';
 
-var url='mongodb://carnifis:123456789@ds257858.mlab.com:57858/horarioshuecos';
+var url = 'mongodb://carnifis:123456789@ds257858.mlab.com:57858/horarioshuecos';
+
 // Connect to the db
 
 
 /* GET home page. */
-router.get('/', function(req, res, next) {
+router.get('/', function (req, res, next) {
 
   res.send({ title: 'Express' });
 });
 
-router.get('/user/:name', function(req, res, next) {
+router.get('/user/:name', function (req, res, next) {
   request({
-  url: 'https://www.instagram.com/'+req.params.name+'/?__a=1',
-  json: true
-}, function(error, response, body) {
-  if(err){
-    var err = new Error('Not Found');
-    err.status = 404;
-    next(err);
-  }
-  if(!body['user']){
-    res.send({
-      type:'ERROR',
-      message: 'El usuario: '+req.params.name+' no existe en Instagram'});
-  }
-  else{
-    res.send({
-      type:'SUCCESS',
-      nodes: body['user']['media']['nodes']
-    });
-  }
+    url: 'https://www.instagram.com/' + req.params.name + '/?__a=1',
+    json: true,
+  }, function (error, response, body) {
+    if (error) {
+      var err = new Error('Not Found');
+      err.status = 404;
+      next(err);
+    }
+
+    if (!body ['user']){
+      res.send({
+        type:'ERROR',
+        message: 'El usuario: '+req.params.name+' no existe en Instagram'});
+    }
+    else{
+      res.send({
+        type:'SUCCESS',
+        nodes: body['user']['media']['nodes']
+      });
+    }
 });
   //res.send({ title: 'Express', name: req.params.name });
 });
