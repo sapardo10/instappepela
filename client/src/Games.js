@@ -7,7 +7,7 @@ class Games extends Component {
       <div>
       <ul>
         {(this.props.games).map((g)=>
-        <li key={g._id}>{g.name1} vs {g.name2}</li>) }
+        <li key={g._id}>{g.name1} vs {g.name2} => Ganador {g.name1} </li>) }
       </ul>
       </div>
     );

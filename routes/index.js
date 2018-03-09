@@ -47,9 +47,12 @@ router.post('/game', function(req, res, next) {
       console.log(req.body);
     db.createCollection('games', {strict:true}, function(err, collection) {});
     var collection = db.collection('games');
+    if(req.body.name1!=='')
     collection.insert(req.body);
+
     }
   });
+res.send(req.body);
 });
 
 router.get('/games', function(req, res){

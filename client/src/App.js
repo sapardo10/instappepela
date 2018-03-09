@@ -20,6 +20,11 @@ class App extends Component {
   }
 
   componentDidMount() {
+    this.getGames();
+
+  }
+
+  getGames(){
     fetch('/games')
     .then(res => res.json())
     .then((data) => {
@@ -27,7 +32,6 @@ class App extends Component {
         games:data,
       });
     });
-
   }
 
   handleName(name1, name2){
@@ -103,9 +107,31 @@ class App extends Component {
         });
       }
 
-
+      this.saveGame();
     },1000);
 
+  }
+
+  saveGame(){
+    alert('entro');
+      fetch('/game', {
+        method: 'POST',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          name1: this.state.name1,
+          name2: this.state.name2,
+        })
+      })
+      .then(function(response){
+    return response.json()
+    }).then(function(body){
+    console.log(body);
+    });
+
+    this.getGames();
   }
 
 
@@ -116,13 +142,13 @@ class App extends Component {
         <Fight onClickFight = {this.handleName} />
         <h1>Results</h1>
         <Results name1 = {this.state.name1}
-                name2 = {this.state.name2}
-                likesPphoto1 = {this.state.likesPphoto1}
-                likesPphoto2 = {this.state.likesPphoto2}/>
+                 name2 = {this.state.name2}
+                 likesPphoto1 = {this.state.likesPphoto1}
+                 likesPphoto2 = {this.state.likesPphoto2}/>
         <h2>{this.state.error}</h2>
         <h1>Games</h1>
         <Games games = {this.state.games}/>
-        
+
       </div>
     );
   }
