@@ -3,33 +3,42 @@ import React, {Component} from 'react';
 class Fight extends Component {
   constructor(props){
     super(props);
-    this.handleChange = this.handleChange.bind(this);
   }
   state = {
     name1:'',
     name2:''
   }
 
-
-
-  handleChange(){
+  handleFight(){
     this.props.onClickFight(this.state.name1,this.state.name2);
+  }
+
+  onHandleChange(event){
+    this.setState({
+      name1: event.target.value,
+    });
+  }
+
+  onHandleChange2(event){
+    this.setState({
+      name2: event.target.value,
+    });
   }
 
   render() {
     return (
       <div>
         <input type="text"
-            value1 = {this.state.name1}
-            onChange = {this.handleChange}
+            value = {this.state.name1}
+            onChange={(event)=> this.onHandleChange(event)}
           />
           <h1>vs</h1>
         <input type="text"
-            value2 = {this.state.name2}
-            onChange = {this.handleChange}
+            value = {this.state.name2}
+            onChange={(event)=> this.onHandleChange2(event)}
             />
         <br/>
-        <button > Fight! </button>
+        <button onClick = {this.handleFight.bind(this)}> Fight! </button>
       </div>
     );
   }
