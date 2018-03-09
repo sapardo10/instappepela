@@ -16,6 +16,7 @@ class App extends Component {
     name2: '',
     numFotos1:0,
     numFotos2:0,
+    error:''
   }
 
   componentDidMount() {
@@ -29,19 +30,40 @@ class App extends Component {
 
     fetch('/user/'+name1)
     .then(res => res.json())
-    .then((photos) => {photos.map((photo)=>{
+    .then((data) => {
+      if(data.type==='SUCCESS'){
+        var photos = data.nodes;
+        this.setState({
+          error: ''
+        });
+        photos.map((photo)=>{
         contado1+=photo.likes.count;
         numFotos1++;
+      });}
+      else{
+        this.setState({
+          error: data.message
+        });
+      }
+
       });
-    });
 
     fetch('/user/'+name2)
     .then(res => res.json())
-    .then((photos) => {photos.map((photo)=>{
+    .then((data) => {
+      if(data.type==='SUCCESS'){
+        var photos = data.nodes;
+        photos.map((photo)=>{
         contado2+=photo.likes.count;
         numFotos2++;
+      });}
+      else{
+        this.setState({
+          error: data.message
+        });
+      }
+
       });
-    });
 
     this.setState({
       name1:name1,
@@ -66,6 +88,7 @@ class App extends Component {
                 cont2 = {this.state.cont2}
                 numFotos1 = {this.state.numFotos1}
                 numFotos2 = {this.state.numFotos2}/>
+        <h2>{this.state.error}</h2>
       </div>
     );
   }
