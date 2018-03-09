@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import './App.css';
 import Fight from './Fight.js';
 import Results from './Results.js';
+import Games from './Games.js';
 
 class App extends Component {
   constructor(props) {
@@ -14,10 +15,19 @@ class App extends Component {
     likesPphoto2: 0,
     name1: '',
     name2: '',
-    error:''
+    error:'',
+    games:[]
   }
 
   componentDidMount() {
+    fetch('/games')
+    .then(res => res.json())
+    .then((data) => {
+      this.setState({
+        games:data,
+      });
+    });
+
   }
 
   handleName(name1, name2){
@@ -110,6 +120,9 @@ class App extends Component {
                 likesPphoto1 = {this.state.likesPphoto1}
                 likesPphoto2 = {this.state.likesPphoto2}/>
         <h2>{this.state.error}</h2>
+        <h1>Games</h1>
+        <Games games = {this.state.games}/>
+        
       </div>
     );
   }
