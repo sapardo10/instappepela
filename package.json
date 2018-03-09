@@ -1,42 +1,18 @@
 {
-  "name": "ejemplo",
-  "version": "1.0.0",
-  "description": "Para encontrar los huecos en comun IYKWIM",
-  "author": {
-    "name": "sergio Pardo",
-    "email": "carnifis@gmail.com"
-  },
-  "license": "MIT",
+  "name": "instappepela",
+  "version": "0.0.0",
+  "private": true,
   "scripts": {
-    "client": "cd client && yarn start",
-    "server": "node server.js",
-    "start": "node ./bin/www",
-    "start2": "concurrently \"npm run server\" \"npm run client\"",
-    "dev": "concurrently --kill-others-on-fail \"yarn server\" \"yarn client\""
+    "start": "node ./bin/www"
   },
   "dependencies": {
-    "body-parser": "^1.18.2",
-    "concurrently": "^3.5.0",
-    "ejs": "^2.5.7",
-    "express": "^4.16.2",
-    "express-validator": "^5.0.3",
-    "mongodb": "^3.0.4",
-    "mongoose": "^5.0.9",
-    "react": "^16.2.0",
-    "react-dom": "^16.2.0",
-    "react-scripts": "1.1.1",
-    "request": "^2.83.0"
-  },
-  "devDependencies": {
-    "concurrently": "^3.5.0"
-  },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/sapardo10/huecoExplorator"
-  },
-  "keywords": [
-    "node",
-    "express",
-    "create-react-app"
-  ]
+    "body-parser": "~1.18.2",
+    "cookie-parser": "~1.4.3",
+    "debug": "~2.6.9",
+    "ejs": "~2.5.7",
+    "express": "~4.15.5",
+    "morgan": "~1.9.0",
+    "request": "^2.83.0",
+    "serve-favicon": "~2.4.5"
+  }
 }
