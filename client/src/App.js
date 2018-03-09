@@ -39,46 +39,63 @@ class App extends Component {
         numFotos1++;
       });
       this.setState({
+        name1:name1,
         likesPphoto1: contado1/numFotos1,
       });
       }
       else{
         this.setState({
-          error: data.message
+          error: this.state.error +'\n'+data.message
         });
       }
-
       });
 
     fetch('/user/'+name2)
     .then(res => res.json())
     .then((data) => {
       if(data.type==='SUCCESS'){
-        var photos = data.nodes;
-        photos.map((photo)=>{
-        contado2+=photo.likes.count;
-        numFotos2++;
-      });
-      this.setState({
-        likesPphoto2: contado2/numFotos2,
-      });
+            var photos = data.nodes;
+            this.setState({
+              error: ''
+            });
+            photos.map((photo)=>{
+              contado2+=photo.likes.count;
+              numFotos2++;
+            });
+            this.setState({
+              name2:name2,
+              likesPphoto2: contado2/numFotos2,
+            });
       }
       else{
         this.setState({
-          error: data.message
+          error: this.state.error +'\n'+data.message
+        });
+      }
+    });
+
+    setTimeout(() => {
+      if(this.state.likesPphoto2>this.state.likesPphoto1){
+        var aux = this.state.likesPphoto1;
+        this.setState({
+            likesPphoto1: contado2/numFotos2,
+            likesPphoto2: aux,
+            name1:name2,
+            name2:name1,
+        });
+      }
+      else{
+        this.setState({
+            likesPphoto1: contado1/numFotos1,
+            name1:name1,
+            likesPphoto2: contado2/numFotos2,
+            name2:name2
         });
       }
 
-      });
 
-    this.setState({
-      name1:name1,
-      name2:name2,
-      cont1: contado1,
-      cont2: contado2,
-      numFotos1:numFotos1,
-      numFotos2:numFotos2
-    });
+    },1000);
+
   }
 
 
