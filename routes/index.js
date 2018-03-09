@@ -1,6 +1,13 @@
 var express = require('express');
 var request = require('request');
+// Retrieve
+var MongoClient = require('mongodb').MongoClient;
 var router = express.Router();
+var secret = 'mysecret';
+
+var url='mongodb://carnifis:123456789@ds257858.mlab.com:57858/horarioshuecos';
+// Connect to the db
+
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
@@ -31,6 +38,37 @@ router.get('/user/:name', function(req, res, next) {
   }
 });
   //res.send({ title: 'Express', name: req.params.name });
+});
+
+router.post('/game', function(req, res, next) {
+  MongoClient.connect(url, function(err, db) {
+    if(!err) {
+      console.log("We are connected");
+      console.log(req.body);
+    db.createCollection('games', {strict:true}, function(err, collection) {});
+    var collection = db.collection('games');
+    collection.insert(req.body);
+    }
+  });
+});
+
+router.get('/games', function(req, res){
+  MongoClient.connect(url, function(err, db) {
+    if(!err) {
+     var collection = db.collection('games');
+      collection.find().toArray(function (err, documents) {
+        if (err) {
+          console.log(err);
+        }
+        else {
+
+          console.log(documents);
+          res.send(documents);
+          }
+        });
+      }
+    });
+
 });
 
 module.exports = router;
