@@ -13,8 +13,22 @@ router.get('/user/:name', function(req, res, next) {
   url: 'https://www.instagram.com/'+req.params.name+'/?__a=1',
   json: true
 }, function(error, response, body) {
-  console.log(body);
-  res.send(body['user']['media']['nodes']);
+  if(err){
+    var err = new Error('Not Found');
+    err.status = 404;
+    next(err);
+  }
+  if(!body['user']){
+    res.send({
+      type:'ERROR',
+      message: 'El usuario: '+req.params.name+' no existe en Instagram'});
+  }
+  else{
+    res.send({
+      type:'SUCCESS',
+      nodes: body['user']['media']['nodes']
+    });
+  }
 });
   //res.send({ title: 'Express', name: req.params.name });
 });
