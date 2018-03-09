@@ -39,7 +39,12 @@ class App extends Component {
         photos.map((photo)=>{
         contado1+=photo.likes.count;
         numFotos1++;
-      });}
+      });
+      this.setState({
+        cont1: contado1,
+        numFotos1:numFotos1,
+      });
+      }
       else{
         this.setState({
           error: data.message
@@ -56,7 +61,12 @@ class App extends Component {
         photos.map((photo)=>{
         contado2+=photo.likes.count;
         numFotos2++;
-      });}
+      });
+      this.setState({
+        cont2: contado2,
+        numFotos2:numFotos2,
+      });
+      }
       else{
         this.setState({
           error: data.message
