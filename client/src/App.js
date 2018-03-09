@@ -10,12 +10,10 @@ class App extends Component {
   }
   state = {
     photos:[],
-    cont1: 0,
-    cont2: 0,
+    likesPphoto1: 0,
+    likesPphoto2: 0,
     name1: '',
     name2: '',
-    numFotos1:0,
-    numFotos2:0,
     error:''
   }
 
@@ -41,8 +39,7 @@ class App extends Component {
         numFotos1++;
       });
       this.setState({
-        cont1: contado1,
-        numFotos1:numFotos1,
+        likesPphoto1: contado1/numFotos1,
       });
       }
       else{
@@ -63,8 +60,7 @@ class App extends Component {
         numFotos2++;
       });
       this.setState({
-        cont2: contado2,
-        numFotos2:numFotos2,
+        likesPphoto2: contado2/numFotos2,
       });
       }
       else{
@@ -94,10 +90,8 @@ class App extends Component {
         <h1>Results</h1>
         <Results name1 = {this.state.name1}
                 name2 = {this.state.name2}
-                cont1 = {this.state.cont1}
-                cont2 = {this.state.cont2}
-                numFotos1 = {this.state.numFotos1}
-                numFotos2 = {this.state.numFotos2}/>
+                likesPphoto1 = {this.state.likesPphoto1}
+                likesPphoto2 = {this.state.likesPphoto2}/>
         <h2>{this.state.error}</h2>
       </div>
     );

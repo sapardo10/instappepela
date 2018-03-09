@@ -6,9 +6,9 @@ class Results extends Component {
   render() {
     return (
       <div>
-        The winner is: {this.props.name1} with {this.props.cont1} likes in the pictures!
+        The winner is: {this.props.likesPphoto1} likes per photo!
         <br/>
-        The loser is: {this.props.name2} with {this.props.cont2} likes in the pictures!
+        The loser is: {this.props.likesPphoto2} likes per photo!
       </div>
     );
   }
