@@ -1,9 +1,7 @@
 import React, {Component} from 'react';
 
 class Fight extends Component {
-  constructor(props){
-    super(props);
-  }
+
   state = {
     name1:'',
     name2:''
